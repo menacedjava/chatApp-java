@@ -19,6 +19,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class AccountService implements UserDetailsService {
+
     private final PasswordEncoder passwordEncoder;
     private final AccountRepository accountRepository;
 
