@@ -158,10 +158,185 @@
 <nav class="navbar navbar-expand-lg navbar-custom">
     <a class="navbar-brand" href="#">Menace Chat</a>
     <div class="ml-auto social-icons">
-        <!--        <a href="https://www.youtube.com/@codewithgoldencat" title="YouTube"><i class="fab fa-youtube"></i></a>-->
-        <!--        <a href="https://www.linkedin.com/in/" title="LinkedIn"><i class="fab fa-linkedin"></i></a>-->
+        <!--        <a href="https://www.linkedin.com/in/davron-madumarov-999b90297/" title="LinkedIn"><i class="fab fa-linkedin"></i></a>-->
         <a href="/logout" id="logout" title="Logout"><i class="fas fa-right-from-bracket"></i></a>
     </div>
 </nav>
+<div class="container-fluid vh-100 d-flex flex-column justify-content-center align-items-center">
+
+    <div class="row w-75 chat-container overflow-hidden" style="height: 550px;">
+        <!-- Users List -->
+        <div class="col-3 users-list text-white d-flex flex-column justify-content-between p-3">
+            <div>
+                <h4>Online Users</h4>
+                <ul id="connectedUsers" class="list-unstyled overflow-auto" style="max-height: 480px;"></ul>
+            </div>
+            <div class="fw-bold" style="font-size: 20px">
+                Logged in as:
+                <span id="connected-user-fullname"></span>
+            </div>
+        </div>
+
+        <!-- Chat Area -->
+        <div class="col-9 d-flex flex-column p-3">
+            <div id="chat-messages" class="chat-messages overflow-auto flex-grow-1 mb-3 border rounded p-3" style="height: 400px;"></div>
+
+            <form id="messageForm" name="messageForm" class="d-flex" style="display: none;">
+                <input type="text" id="message" class="form-control me-2" placeholder="Type what you want to say man..." autocomplete="off">
+                <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <p>&copy; 2025 Menace. All rights reserved. | <a href="#" class="custom-link">Privacy Policy</a> | <a href="#" class="custom-link">Terms of Service</a></p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script>
+    const messageForm = document.querySelector('#messageForm');
+    const messageInput = document.querySelector('#message');
+    const chatArea = document.querySelector('#chat-messages');
+    const logout = document.querySelector('#logout');
+    let selectedUserId = null;
+    let stompClient = null;
+    const username = '[[${username}]]';
+
+    const notificationState = {}; // Keeps track of notifications for each user
+
+    function connect(event) {
+        const socket = new SockJS('/ws');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, onConnected);
+        event.preventDefault();
+    }
+
+    function onConnected() {
+        stompClient.subscribe(`/user/${username}/queue/messages`, onMessageReceived);
+        stompClient.subscribe(`/user/public`, onMessageReceived);
+        stompClient.send("/app/user.addUser", {}, JSON.stringify({ username: username, status: 'ONLINE' }));
+        document.querySelector('#connected-user-fullname').textContent = username;
+        findAndDisplayConnectedUsers();
+    }
+
+    async function findAndDisplayConnectedUsers() {
+        const connectedUsersResponse = await fetch('/users');
+        let connectedUsers = await connectedUsersResponse.json();
+        connectedUsers = connectedUsers.filter(user => user.username !== username);
+        const connectedUsersList = document.getElementById('connectedUsers');
+        connectedUsersList.innerHTML = '';
+        connectedUsers.forEach(user => appendUserElement(user, connectedUsersList));
+    }
+
+    function appendUserElement(user, connectedUsersList) {
+        const listItem = document.createElement('li');
+        listItem.classList.add('user-item', 'd-flex', 'align-items-center', 'p-2', 'mb-2', 'bg-light', 'rounded');
+        listItem.id = user.username;
+
+        const badgeVisible = notificationState[user.username] ? 'inline-block' : 'none';
+
+        listItem.innerHTML = `
+            <img src="https://png.pngtree.com/png-clipart/20240603/original/pngtree-cat-logo-design-png-image_15240244.png" alt="${user.username}" class="rounded-circle me-2" width="40" height="40">
+            <span class="fw-bold text-dark">${user.username}</span>
+            <span class="badge bg-danger ms-auto" id="notify-${user.username}" style="display: ${badgeVisible};">New</span>
+        `;
+
+        listItem.addEventListener('click', userItemClick);
+        connectedUsersList.appendChild(listItem);
+    }
+
+    function userItemClick(event) {
+        document.querySelectorAll('.user-item').forEach(item => item.classList.remove('active'));
+        const clickedUser = event.currentTarget;
+        clickedUser.classList.add('active');
+
+        messageForm.style.display = 'flex';
+        selectedUserId = clickedUser.id;
+
+        // Clear the notification badge
+        const notificationBadge = document.getElementById(`notify-${selectedUserId}`);
+        if (notificationBadge) {
+            notificationBadge.style.display = 'none';
+        }
+
+        // Update the notification state
+        delete notificationState[selectedUserId];
+
+        fetchAndDisplayUserChat();
+    }
+
+    async function fetchAndDisplayUserChat() {
+        const userChatResponse = await fetch(`/messages/${username}/${selectedUserId}`);
+        const userChat = await userChatResponse.json();
+        chatArea.innerHTML = '';
+        userChat.forEach(chat => displayMessage(chat.senderId, chat.content));
+        chatArea.scrollTop = chatArea.scrollHeight;
+    }
+
+    function displayMessage(senderId, content) {
+        const messageContainer = document.createElement('div');
+        messageContainer.classList.add('message');
+        if (senderId === username) {
+            messageContainer.classList.add('sender');
+        } else {
+            messageContainer.classList.add('receiver');
+        }
+        messageContainer.textContent = content;
+        chatArea.appendChild(messageContainer);
+        chatArea.scrollTop = chatArea.scrollHeight;
+    }
+
+    function sendMessage(event) {
+        event.preventDefault();
+        const messageContent = messageInput.value.trim();
+        if (messageContent && stompClient) {
+            const chatMessage = {
+                senderId: username,
+                receiverId: selectedUserId,
+                content: messageContent,
+                timestamp: new Date()
+            };
+            stompClient.send("/app/chat", {}, JSON.stringify(chatMessage));
+            displayMessage(username, messageContent);
+            messageInput.value = '';
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+    }
+
+    function onMessageReceived(payload) {
+        const message = JSON.parse(payload.body);
+
+        // Update notification state
+        notificationState[message.senderId] = true;
+
+        // Refresh user list and reapply notification state
+        findAndDisplayConnectedUsers().then(() => {
+            Object.keys(notificationState).forEach(userId => {
+                if (notificationState[userId]) {
+                    const notificationBadge = document.getElementById(`notify-${userId}`);
+                    if (notificationBadge) {
+                        notificationBadge.style.display = 'inline-block';
+                    }
+                }
+            });
+        });
+
+        if (selectedUserId && selectedUserId === message.senderId) {
+            displayMessage(message.senderId, message.content);
+            delete notificationState[message.senderId]; // Clear notification if chat is open
+        }
+    }
+
+    function onLogout() {
+        stompClient.send("/app/user.disconnectUser", {}, JSON.stringify({ username: username, status: 'OFFLINE' }));
+        window.location.reload();
+    }
+
+    messageForm.addEventListener('submit', sendMessage);
+    logout.addEventListener('click', onLogout);
+    connect();
+</script>
 </body>
 </html>
