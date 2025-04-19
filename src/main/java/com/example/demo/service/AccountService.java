@@ -54,7 +54,7 @@ public class AccountService implements UserDetailsService {
         return accountRepository.save(account);
     }
     public List<Account> getConnectedUsers(){
-        return accountRepository.findAllByStatus(Status.ONLINE);
+        return accountRepository.findAllByStatus(String.valueOf(Status.ONLINE));
     }
     public void saveUser(Account user) {
         var existingUser = accountRepository.findByUsername(user.getUsername()).orElse(null);
@@ -73,7 +73,7 @@ public class AccountService implements UserDetailsService {
     }
 
     public List<Account> findConnectedUsers() {
-        return accountRepository.findAllByStatus(Status.ONLINE);
+        return accountRepository.findAllByStatus(String.valueOf(Status.ONLINE));
     }
 
 
