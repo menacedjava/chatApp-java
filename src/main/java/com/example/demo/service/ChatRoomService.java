@@ -32,13 +32,7 @@ public class ChatRoomService {
     private String createChatId(String senderId, String receiverId) {
         var chatId = String.format("%s_%s", senderId, receiverId);
 
-        ChatRoom senderReceiver = ChatRoom
-                .builder()
-                .chatId(chatId)
-                .senderId(senderId)
-                .receiverId(receiverId)
-                .build();
-
+        zzz
         ChatRoom receiverSender = ChatRoom
                 .builder()
                 .chatId(chatId)
