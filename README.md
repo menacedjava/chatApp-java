@@ -5,4 +5,4 @@
 <p> ♦✅ Real-time messaging between multiple clients </p>
 <p> ♦✅Multithreaded server capable of handling multiple connections </p>
 <p> ♦✅Simple text-based interface </p>
-♦✅Lightweight and min
+♦✅Lightweight and mini
