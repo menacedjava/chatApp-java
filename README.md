@@ -1,4 +1,4 @@
 <h1>ChatApp Java</h1>
 <p>
-  Chat App Java is a simple console-based client-server chat appli
+  Chat App Java is a simple console-based client-server chat applic
 </p> 
