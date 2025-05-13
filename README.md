@@ -1,2 +1,2 @@
-<h1>ChatApp Jav
+<h1>ChatApp Java
 </h1>
