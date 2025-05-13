@@ -5,5 +5,5 @@
 <p> ♦✅ Real-time messaging between multiple clients </p>
 <p> ♦✅Multithreaded server capable of handling multiple connections </p>
 <p> ♦✅Simple text-based interface </p>
-<p>♦✅Lightweight and minimal dependencies (pure Java)</p>
+<p>♦✅ Lightweight and minimal dependencies (pure Java)</p>
 ♦✅ C
