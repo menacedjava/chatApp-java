@@ -1,4 +1,4 @@
 <h1>ChatApp Java</h1>
 <p>
-  Chat App Java is a simple console-based cl
+  Chat App Java is a simple console-based cli
 </p>
