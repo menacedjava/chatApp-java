@@ -1,2 +1,2 @@
-<h1>ChatAp
+<h1>ChatApp
 </h1>
