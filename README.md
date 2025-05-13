@@ -1,4 +1,4 @@
 <h1>ChatApp Java</h1>
 <p>
-  Chat App Java is a simple co
+  Chat App Java is a simple con
 </p>
