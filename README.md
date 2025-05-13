@@ -7,4 +7,4 @@
 <p> ✅ Simple text-based interface </p>
 <p> ✅ Lightweight and minimal dependencies (pure Java) </p>
 <p> ✅ Clean separation between server and client code </p>
-<h1> 🏗️Project Structure  </h1>
+<h1>🏗️Project Structure </h1>
