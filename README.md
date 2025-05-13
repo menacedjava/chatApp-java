@@ -1,4 +1,4 @@
 <h1>ChatApp Java</h1>
 <p>
-  Ch
+  Cha
 </p>
