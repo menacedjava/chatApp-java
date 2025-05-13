@@ -1,4 +1,4 @@
 <h1>ChatApp Java</h1>
 <p>
-  Chat App Java is a sim
+  Chat App Java is a simp
 </p>
