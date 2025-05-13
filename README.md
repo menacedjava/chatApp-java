@@ -8,4 +8,4 @@
 <p> ✅ Lightweight and minimal dependencies (pure Java) </p>
 <p> ✅ Clean separation between server and client code </p>
 <h1>🏗️Project Structure </h1>
-↕ Server.java - Listens for incoming client connections and relay
+↕ Server.java - Listens for incoming client connections and relays
