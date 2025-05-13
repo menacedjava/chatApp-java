@@ -6,4 +6,3 @@
 <p> ♦✅Multithreaded server capable of handling multiple connections </p>
 <p> ♦✅Simple text-based interface </p>
 ♦✅
-
