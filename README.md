@@ -9,4 +9,4 @@
 <p> ✅ Clean separation between server and client code </p>
 <h1>🏗️Project Structure </h1>
 <p> ↕ Server.java - Listens for incoming client connections and relays messages to all connected clients. </p>
-<p> • Client.java - Co
+<p> • Client.java - Con
