@@ -4,7 +4,7 @@
 <p> ✅ Real-time messaging between multiple clients <br>
 ✅ Multithreaded server capable of handling multiple connections <br>
 ✅ Simple text-based interface <br>
- ✅ Lightweight and minimal dependencies (pure Java) </p
+ ✅ Lightweight and minimal dependencies (pure Java) <br>
 <p> ✅ Clean separation between server and client code </p>
 <h1>🏗️Project Structure </h1>
 <p> ↕ Server.java - Listens for incoming client connections and relays messages to all connected clients. </p>
