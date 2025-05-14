@@ -3,7 +3,7 @@
 <h1>🧠Features </h1>
 <p> ✅ Real-time messaging between multiple clients <br>
  ✅ Multithreaded server capable of handling multiple connections </p
-<p ✅ Simple text-based interface </
+<✅ Simple text-based interface </
 <p> ✅ Lightweight and minimal dependencies (pure Java) </p
 <p> ✅ Clean separation between server and client code </p>
 <h1>🏗️Project Structure </h1>
