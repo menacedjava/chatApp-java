@@ -10,4 +10,4 @@ This project is ideal for beginners lookin' to understand how TCP/IP-based messa
 <p> 1. Server starts and listens on a defined port. <br> 2. Clients connect to the server using the same port and IP-address. <br> 3. Each client runs in its own thread to allow for simultaneous message sendin' and receivin'. <br> 4. Messages sent from one client and broadcast to all other clients via the server. </p>
 🧪How to Run
 1. Clone the repository
-git clone https://github.
+git clone https://github.c
