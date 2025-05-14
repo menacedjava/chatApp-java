@@ -10,4 +10,4 @@
 <p> ↕ Server.java - Listens for incoming client connections and relays messages to all connected clients. </p>
 <p> • Client.java - Connects to the server, sends messages, and listens for incoming messages from the server. </p>
 <h1>🚀 How it works <h1>
-1. Server
+1. Server s
