@@ -11,4 +11,4 @@ This project is ideal for beginners lookin' to understand how TCP/IP-based messa
 🧪How to Run
 1. Clone the repository
 <pre>git clone https://github.com/menacedjava/chatApp-java.git
-cd chatApp-java</pre>
+cd chatApp-java<></pre>
