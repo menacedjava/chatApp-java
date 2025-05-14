@@ -7,5 +7,5 @@ This project is ideal for beginners lookin' to understand how TCP/IP-based messa
 <h1>🏗️Project Structure </h1>
 <p> ↕ Server.java - Listens for incoming client connections and relays messages to all connected clients. <br> • Client.java - Connects to the server, sends messages, and listens for incoming messages from the server. </p>
 <h1>🚀 How it works </h1>
-<p> 1. Server starts and listens on a defined port. <br> 2. Clients connect to the server using the same port and IP-address. <br> 3. Each client runs in
+<p> 1. Server starts and listens on a defined port. <br> 2. Clients connect to the server using the same port and IP-address. <br> 3. Each client runs in i
 </p>
