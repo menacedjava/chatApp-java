@@ -12,4 +12,4 @@ This project is ideal for beginners lookin' to understand how TCP/IP-based messa
 <p> 1. Clone the repository </p>
 <pre><code>git clone https://github.com/menacedjava/chatApp-java.git
 cd chatApp-java </code></pre>
-
+ 
